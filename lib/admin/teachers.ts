@@ -1,0 +1,231 @@
+import { teachers } from "@/lib/teachers";
+import { AdminTeacher } from "./types";
+
+export const adminTeachers: AdminTeacher[] = [
+  // ── Active teachers (mapped from existing teachers data) ──
+  {
+    ...teachers[0], // Maya Reyes
+    id: "t-1",
+    email: "maya.reyes@email.com",
+    status: "active",
+    applicationDate: "2024-11-02",
+    approvedDate: "2024-11-18",
+    documents: [
+      { name: "Breathwork Certification", url: "/docs/t-1/cert-breathwork.pdf", verified: true },
+      { name: "CPR Certificate", url: "/docs/t-1/cpr.pdf", verified: true },
+      { name: "Resume", url: "/docs/t-1/resume.pdf", verified: true },
+    ],
+    interviewDate: "2024-11-15",
+    interviewNotes: "Excellent communicator. Deep knowledge of pranayama and nervous system regulation. Strong fit.",
+    revenue: 9230,
+    completionRate: 97,
+  },
+  {
+    ...teachers[1], // James Okafor
+    id: "t-2",
+    email: "james.okafor@email.com",
+    status: "active",
+    applicationDate: "2024-09-10",
+    approvedDate: "2024-09-28",
+    documents: [
+      { name: "RYT-500 Yoga Certification", url: "/docs/t-2/ryt500.pdf", verified: true },
+      { name: "Breathwork Training", url: "/docs/t-2/breathwork.pdf", verified: true },
+    ],
+    interviewDate: "2024-09-25",
+    interviewNotes: "Very experienced. Strong client reviews from previous platforms. Approved.",
+    revenue: 15750,
+    completionRate: 99,
+  },
+  {
+    ...teachers[2], // Lena Park
+    id: "t-3",
+    email: "lena.park@email.com",
+    status: "active",
+    applicationDate: "2024-10-05",
+    approvedDate: "2024-10-22",
+    documents: [
+      { name: "Licensed Therapist Credential", url: "/docs/t-3/therapy-license.pdf", verified: true },
+      { name: "Mindfulness Teacher Training", url: "/docs/t-3/mindfulness.pdf", verified: true },
+      { name: "Resume", url: "/docs/t-3/resume.pdf", verified: true },
+    ],
+    interviewDate: "2024-10-19",
+    interviewNotes: "Exceptional background as a licensed therapist. Perfect for high-achiever clientele.",
+    revenue: 6860,
+    completionRate: 100,
+  },
+  {
+    ...teachers[3], // David Cohen
+    id: "t-4",
+    email: "david.cohen@email.com",
+    status: "active",
+    applicationDate: "2025-06-12",
+    approvedDate: "2025-06-30",
+    documents: [
+      { name: "Yoga Alliance Certification", url: "/docs/t-4/yoga-cert.pdf", verified: true },
+      { name: "Breathwork Practitioner Diploma", url: "/docs/t-4/breathwork.pdf", verified: true },
+    ],
+    interviewDate: "2025-06-27",
+    interviewNotes: "Newer teacher but very passionate. Practical approach resonates well with beginners.",
+    revenue: 1440,
+    completionRate: 96,
+  },
+  {
+    ...teachers[4], // Anika Sharma
+    id: "t-5",
+    email: "anika.sharma@email.com",
+    status: "active",
+    applicationDate: "2024-08-20",
+    approvedDate: "2024-09-05",
+    documents: [
+      { name: "Somatic Experiencing Certificate", url: "/docs/t-5/somatic.pdf", verified: true },
+      { name: "Trauma-Informed Care Training", url: "/docs/t-5/trauma.pdf", verified: true },
+      { name: "Professional References", url: "/docs/t-5/references.pdf", verified: true },
+    ],
+    interviewDate: "2024-09-02",
+    interviewNotes: "14 years of experience. Highly qualified in somatic work and trauma recovery.",
+    revenue: 14960,
+    completionRate: 98,
+  },
+  {
+    ...teachers[5], // Carlos Vega
+    id: "t-6",
+    email: "carlos.vega@email.com",
+    status: "active",
+    applicationDate: "2024-07-15",
+    approvedDate: "2024-08-01",
+    documents: [
+      { name: "Somatic Therapy Credential", url: "/docs/t-6/spiritual.pdf", verified: true },
+      { name: "Breathwork Master Certification", url: "/docs/t-6/breathwork.pdf", verified: true },
+    ],
+    interviewDate: "2024-07-29",
+    interviewNotes: "Unique background in indigenous traditions. Very articulate about his approach.",
+    revenue: 13855,
+    completionRate: 98,
+  },
+  {
+    ...teachers[6], // Nora Eriksen
+    id: "t-7",
+    email: "nora.eriksen@email.com",
+    status: "active",
+    applicationDate: "2025-08-01",
+    approvedDate: "2025-08-18",
+    documents: [
+      { name: "Yoga Teacher Certification", url: "/docs/t-7/yoga.pdf", verified: true },
+      { name: "Somatic Movement Education", url: "/docs/t-7/somatic.pdf", verified: true },
+    ],
+    interviewDate: "2025-08-15",
+    interviewNotes: "Newer to the platform but strong qualifications. Niche in injury recovery.",
+    revenue: 1260,
+    completionRate: 94,
+  },
+  {
+    ...teachers[7], // Kwame Mensah
+    id: "t-8",
+    email: "kwame.mensah@email.com",
+    status: "active",
+    applicationDate: "2024-10-28",
+    approvedDate: "2024-11-12",
+    documents: [
+      { name: "Meditation Teacher Certification", url: "/docs/t-8/meditation.pdf", verified: true },
+      { name: "Emotional Intelligence Coaching", url: "/docs/t-8/ei-coaching.pdf", verified: true },
+    ],
+    interviewDate: "2024-11-09",
+    interviewNotes: "Focused on emotional clarity. Great presence and calm demeanor during interview.",
+    revenue: 12675,
+    completionRate: 97,
+  },
+
+  // ── Suspended teacher ──
+  {
+    ...teachers[8], // Sofia Tanaka
+    id: "t-9",
+    email: "sofia.tanaka@email.com",
+    status: "suspended",
+    applicationDate: "2024-09-18",
+    approvedDate: "2024-10-04",
+    suspendedDate: "2026-03-20",
+    documents: [
+      { name: "Breathwork Certification", url: "/docs/t-9/breathwork.pdf", verified: true },
+      { name: "Somatic Practitioner License", url: "/docs/t-9/somatic.pdf", verified: true },
+    ],
+    interviewDate: "2024-10-01",
+    interviewNotes: "Strong credentials. Approved after interview. Note: suspended on 2026-03-20 due to repeated late cancellations.",
+    revenue: 10050,
+    completionRate: 78,
+  },
+
+  // ── Rejected teacher ──
+  {
+    ...teachers[9], // Eli Brandt
+    id: "t-10",
+    email: "eli.brandt@email.com",
+    status: "rejected",
+    applicationDate: "2025-12-10",
+    rejectedDate: "2025-12-28",
+    rejectionReason: "Submitted credentials could not be verified. Yoga certification was from an unaccredited program.",
+    documents: [
+      { name: "Yoga Teacher Certificate", url: "/docs/t-10/yoga.pdf", verified: false },
+      { name: "Spiritual Mentorship Letter", url: "/docs/t-10/mentorship.pdf", verified: false },
+    ],
+    interviewDate: "2025-12-22",
+    interviewNotes: "Pleasant interview but unable to verify primary certification. Recommend rejection pending re-application with accredited credentials.",
+    revenue: 0,
+    completionRate: 0,
+  },
+
+  // ── Pending teachers ──
+  {
+    ...teachers[10], // Priya Nair
+    id: "t-11",
+    email: "priya.nair@email.com",
+    status: "pending",
+    applicationDate: "2026-03-28",
+    documents: [
+      { name: "Somatic Therapy Certification", url: "/docs/t-11/somatic.pdf", verified: true },
+      { name: "Ayurvedic Practitioner License", url: "/docs/t-11/ayurveda.pdf", verified: false },
+      { name: "Resume", url: "/docs/t-11/resume.pdf", verified: true },
+    ],
+    revenue: 0,
+    completionRate: 0,
+  },
+  {
+    ...teachers[11], // Marco Rossi
+    id: "t-12",
+    email: "marco.rossi@email.com",
+    status: "pending",
+    applicationDate: "2026-04-01",
+    documents: [
+      { name: "RYT-200 Yoga Certification", url: "/docs/t-12/ryt200.pdf", verified: true },
+      { name: "Sports Science Degree", url: "/docs/t-12/degree.pdf", verified: true },
+      { name: "Breathwork Level 1", url: "/docs/t-12/breathwork.pdf", verified: false },
+    ],
+    revenue: 0,
+    completionRate: 0,
+  },
+  {
+    id: "t-13",
+    name: "Anya Petrova",
+    initials: "AP",
+    slug: "anya-petrova",
+    email: "anya.petrova@email.com",
+    tagline: "I help you find stillness and clarity through ancient meditation and breathwork practices.",
+    disciplines: ["Meditation", "Breathwork"],
+    bgColor: "bg-deep-sage",
+    price: 72,
+    nextAvailable: "Mon, Apr 20",
+    yearsExperience: 9,
+    languages: ["English", "Russian", "Tibetan"],
+    badge: "New",
+    rating: 0,
+    sessions: 0,
+    status: "pending",
+    applicationDate: "2026-04-05",
+    documents: [
+      { name: "Buddhist Studies Certificate", url: "/docs/t-13/buddhist.pdf", verified: true },
+      { name: "Neuroscience of Meditation Course", url: "/docs/t-13/neuro.pdf", verified: false },
+      { name: "Reference Letter - Dharma Center", url: "/docs/t-13/reference.pdf", verified: true },
+    ],
+    revenue: 0,
+    completionRate: 0,
+  },
+];

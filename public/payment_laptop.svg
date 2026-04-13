@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" fill="none">
+  <!-- Background -->
+  <rect width="800" height="520" fill="#F5F0E8"/>
+
+  <!-- Laptop base / keyboard -->
+  <rect x="120" y="400" width="560" height="28" rx="6" fill="#D6D0C8"/>
+  <rect x="100" y="424" width="600" height="14" rx="7" fill="#C8C2BA"/>
+  <!-- Trackpad -->
+  <rect x="340" y="408" width="120" height="10" rx="5" fill="#C8C2BA"/>
+
+  <!-- Laptop lid -->
+  <rect x="140" y="110" width="520" height="295" rx="14" fill="#2A2A2A"/>
+  <!-- Screen bezel inner -->
+  <rect x="155" y="122" width="490" height="272" rx="8" fill="#1A1A1A"/>
+  <!-- Screen surface -->
+  <rect x="162" y="129" width="476" height="258" rx="5" fill="#FFFFFF"/>
+
+  <!-- Screen content: browser chrome -->
+  <rect x="162" y="129" width="476" height="28" rx="5" fill="#F2F2F2"/>
+  <circle cx="180" cy="143" r="5" fill="#FF5F57"/>
+  <circle cx="196" cy="143" r="5" fill="#FFBD2E"/>
+  <circle cx="212" cy="143" r="5" fill="#28CA41"/>
+  <rect x="240" y="136" width="260" height="14" rx="7" fill="#E0E0E0"/>
+  <rect x="256" y="140" width="160" height="6" rx="3" fill="#BDBDBD"/>
+
+  <!-- Card container -->
+  <rect x="242" y="177" width="316" height="190" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#00000018"/>
+    </filter>
+  </defs>
+
+  <!-- Green circle check -->
+  <circle cx="400" cy="222" r="26" fill="#E6F9F1"/>
+  <circle cx="400" cy="222" r="20" fill="#22C55E"/>
+  <!-- Checkmark -->
+  <path d="M390 222 L397 229 L412 214" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Payment Received title -->
+  <text x="400" y="266" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-weight="600" fill="#1A1A1A">Payment received</text>
+
+  <!-- Amount -->
+  <text x="400" y="292" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#2D4A3E">$65.00</text>
+
+  <!-- Divider -->
+  <line x1="268" y1="308" x2="532" y2="308" stroke="#F0EDE8" stroke-width="1"/>
+
+  <!-- Detail rows -->
+  <text x="278" y="326" font-family="-apple-system, sans-serif" font-size="10" fill="#9CA3AF">From</text>
+  <text x="522" y="326" text-anchor="end" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#374151">Jordan Lee</text>
+
+  <text x="278" y="344" font-family="-apple-system, sans-serif" font-size="10" fill="#9CA3AF">Session</text>
+  <text x="522" y="344" text-anchor="end" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#374151">Breathwork · 60 min</text>
+
+  <text x="278" y="362" font-family="-apple-system, sans-serif" font-size="10" fill="#9CA3AF">Date</text>
+  <text x="522" y="362" text-anchor="end" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#374151">Apr 11, 2026</text>
+
+  <!-- Camera dot -->
+  <circle cx="400" cy="118" r="3" fill="#3A3A3A"/>
+</svg>
