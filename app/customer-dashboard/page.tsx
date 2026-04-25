@@ -3,8 +3,9 @@ import { Search } from "lucide-react";
 import MemberTopBar from "@/components/member/layout/MemberTopBar";
 import WelcomeBanner from "@/components/member/home/WelcomeBanner";
 import UpcomingSessionCard from "@/components/member/home/UpcomingSessionCard";
-import QuickStats from "@/components/member/home/QuickStats";
-import MyTeachers from "@/components/member/home/MyTeachers";
+import NeedsAttention from "@/components/member/home/NeedsAttention";
+import HomePractices from "@/components/member/home/HomePractices";
+import HomeReflectionPrompt from "@/components/member/home/HomeReflectionPrompt";
 import RecentActivity from "@/components/member/home/RecentActivity";
 
 export default function DashboardPage() {
@@ -14,16 +15,26 @@ export default function DashboardPage() {
 
       <div className="p-4 md:p-6 lg:p-8 space-y-6">
         <WelcomeBanner />
-        <UpcomingSessionCard />
-        <QuickStats />
 
-        {/* My Teachers */}
-        <section>
-          <h2 className="font-display text-lg text-neutral-900 mb-3">
-            My Teachers
-          </h2>
-          <MyTeachers />
-        </section>
+        {/* Next Session + Needs Attention side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-7">
+            <UpcomingSessionCard />
+          </div>
+          <div className="lg:col-span-5">
+            <NeedsAttention />
+          </div>
+        </div>
+
+        {/* Today's Practices + Daily Reflection side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div className="lg:col-span-7">
+            <HomePractices />
+          </div>
+          <div className="lg:col-span-5">
+            <HomeReflectionPrompt />
+          </div>
+        </div>
 
         <RecentActivity />
 

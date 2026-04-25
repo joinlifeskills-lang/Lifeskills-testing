@@ -35,10 +35,10 @@ export default async function ClientDetailPage({
             Overview
           </span>
           <Link
-            href={`/teacher-dashboard/clients/${id}/journey`}
+            href={`/teacher-dashboard/clients/${id}/client-journey`}
             className="px-4 py-2.5 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
           >
-            Journey
+            Client Journey
           </Link>
         </div>
 
