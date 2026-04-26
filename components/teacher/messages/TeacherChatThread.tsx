@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { MessageSquare } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { MessageSquare, Trash2 } from "lucide-react";
 import type { TeacherConversation, TeacherMessage } from "@/lib/teacher/types";
+import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal";
 
 interface TeacherChatThreadProps {
   conversation: TeacherConversation | null;
@@ -14,10 +15,26 @@ export default function TeacherChatThread({
   messages,
 }: TeacherChatThreadProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [deletedMsgIds, setDeletedMsgIds] = useState<Set<string>>(new Set());
+  const [pendingDeleteMsgId, setPendingDeleteMsgId] = useState<string | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const handleDeleteMessage = (id: string) => {
+    setPendingDeleteMsgId(id);
+  };
+
+  const confirmDeleteMessage = () => {
+    if (!pendingDeleteMsgId) return;
+    setDeletedMsgIds((prev) => {
+      const next = new Set(prev);
+      next.add(pendingDeleteMsgId);
+      return next;
+    });
+    setPendingDeleteMsgId(null);
+  };
 
   if (!conversation) {
     return (
@@ -32,10 +49,12 @@ export default function TeacherChatThread({
     );
   }
 
+  const visibleMessages = messages.filter((msg) => !deletedMsgIds.has(msg.id));
+
   return (
     <div className="flex h-full flex-col">
-      {/* Header */}
-      <div className="flex items-center gap-3 border-b border-neutral-100 px-5 py-3">
+      {/* Header — hidden on mobile since the page back bar already shows the name */}
+      <div className="hidden items-center gap-3 border-b border-neutral-100 px-5 py-3 lg:flex">
         <p className="font-medium text-neutral-900 text-sm">
           {conversation.clientName}
         </p>
@@ -49,7 +68,7 @@ export default function TeacherChatThread({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-        {messages.map((msg) => {
+        {visibleMessages.map((msg) => {
           if (msg.sender === "system") {
             return (
               <div key={msg.id} className="text-center">
@@ -66,9 +85,9 @@ export default function TeacherChatThread({
           return (
             <div
               key={msg.id}
-              className={`flex ${isTeacher ? "justify-end" : "justify-start"}`}
+              className={`group flex ${isTeacher ? "justify-end" : "justify-start"}`}
             >
-              <div className="max-w-[75%]">
+              <div className="relative max-w-[75%]">
                 <div
                   className={`px-4 py-2.5 text-sm ${
                     isTeacher
@@ -85,12 +104,31 @@ export default function TeacherChatThread({
                 >
                   {msg.timestamp}
                 </p>
+
+                {/* Delete icon on hover */}
+                <button
+                  onClick={() => handleDeleteMessage(msg.id)}
+                  className={`absolute top-1/2 -translate-y-1/2 rounded-md p-1 text-neutral-300 opacity-0 transition-opacity hover:bg-red-50 hover:text-red-500 group-hover:opacity-100 ${
+                    isTeacher ? "-left-8" : "-right-8"
+                  }`}
+                  title="Delete message"
+                >
+                  <Trash2 size={13} />
+                </button>
               </div>
             </div>
           );
         })}
         <div ref={bottomRef} />
       </div>
+
+      {pendingDeleteMsgId && (
+        <ConfirmDeleteModal
+          message="Are you sure you want to delete this message? This action cannot be undone."
+          onConfirm={confirmDeleteMessage}
+          onCancel={() => setPendingDeleteMsgId(null)}
+        />
+      )}
     </div>
   );
 }

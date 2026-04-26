@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
 import BookingCard from "@/components/ui/BookingCard";
 import { teachers, disciplineTagColors, disciplineGradient } from "@/lib/teachers";
+import MessageTeacherButton from "@/components/ui/MessageTeacherButton";
 
 export function generateStaticParams() {
   return teachers.map((t) => ({ slug: t.slug }));
@@ -78,15 +79,13 @@ export default async function TeacherProfilePage({
                   })}
                 </div>
 
-                {/* Available badge + rating */}
+                {/* Available badge + Message */}
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-6 font-sans text-[0.85rem] text-neutral-600">
                   <div className="flex items-center gap-1.5">
                     <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
                     Available {teacher.nextAvailable}
                   </div>
-                  <div>
-                    <span className="text-amber-500">&#9733;</span> {teacher.rating} &middot; {teacher.sessions} sessions
-                  </div>
+                  <MessageTeacherButton teacherName={teacher.name} teacherSlug={teacher.slug} />
                 </div>
 
                 {/* Bio */}

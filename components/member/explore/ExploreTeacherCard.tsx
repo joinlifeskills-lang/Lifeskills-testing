@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import {
   Teacher,
   disciplineTagColors,
@@ -62,15 +62,6 @@ export default function ExploreTeacherCard({ teacher }: ExploreTeacherCardProps)
         })}
       </div>
 
-      {/* Rating + sessions */}
-      <div className="flex items-center gap-1.5 text-sm mb-2">
-        <Star size={14} className="text-bright-amber fill-bright-amber" />
-        <span className="font-medium text-neutral-900">{teacher.rating}</span>
-        <span className="text-neutral-400">
-          ({teacher.sessions} sessions)
-        </span>
-      </div>
-
       {/* Price */}
       <p className="text-sm font-semibold text-neutral-700 mb-2">
         ${teacher.price}/session
@@ -82,16 +73,23 @@ export default function ExploreTeacherCard({ teacher }: ExploreTeacherCardProps)
       </p>
 
       {/* Buttons */}
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <Link
           href={`/find-a-teacher/${teacher.slug}`}
-          className="flex-1 text-center py-2.5 rounded-full font-semibold text-[0.88rem] border border-deep-sage text-deep-sage bg-transparent hover:bg-deep-sage/5 transition-colors"
+          className="flex-1 text-center py-2.5 rounded-full font-semibold text-[0.82rem] border border-deep-sage text-deep-sage bg-transparent hover:bg-deep-sage/5 transition-colors"
         >
           View Profile
         </Link>
-        <button className="flex-1 py-2.5 rounded-full font-semibold text-[0.88rem] bg-deep-sage text-white hover:bg-deep-sage-hover transition-colors">
-          Book Intro Call
+        <button className="flex-1 py-2.5 rounded-full font-semibold text-[0.82rem] bg-deep-sage text-white hover:bg-deep-sage-hover transition-colors">
+          Book Intro
         </button>
+        <Link
+          href={`/customer-dashboard/messages?teacher=${teacher.slug}`}
+          className="flex items-center justify-center shrink-0 h-10 w-10 rounded-full border border-neutral-200 text-neutral-500 hover:bg-neutral-50 hover:text-neutral-700 transition-colors"
+          title={`Message ${teacher.name}`}
+        >
+          <MessageSquare size={17} />
+        </Link>
       </div>
     </div>
   );

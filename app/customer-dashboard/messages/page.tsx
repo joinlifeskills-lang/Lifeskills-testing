@@ -147,12 +147,12 @@ export default function MessagesPage() {
   const hasConversations = memberConversations.length > 0;
 
   return (
-    <div className="min-h-screen bg-warm-sand">
+    <div className="-mb-20 lg:-mb-0 flex flex-col h-[calc(100dvh-58px)] lg:h-screen">
       <MemberTopBar />
 
       {/* Desktop layout */}
-      <div className="hidden lg:flex h-[calc(100vh-53px)] p-6 gap-4">
-        <div className="w-80 bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden">
+      <div className="hidden lg:flex flex-1 min-h-0">
+        <div className="w-80 shrink-0 border-r border-neutral-100 bg-white overflow-hidden">
           <ConversationList
             conversations={memberConversations}
             activeId={activeId}
@@ -161,7 +161,7 @@ export default function MessagesPage() {
           />
         </div>
 
-        <div className="flex-1 bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden">
+        <div className="flex-1 bg-white flex flex-col min-h-0 overflow-hidden">
           {hasConversations ? (
             <>
               <ChatThread conversation={activeConversation} messages={messages} />
@@ -178,7 +178,7 @@ export default function MessagesPage() {
 
       {/* Mobile layout — list view */}
       {mobileView === "list" && (
-        <div className="lg:hidden h-[calc(100vh-48px-58px)] bg-white flex flex-col overflow-hidden">
+        <div className="lg:hidden flex-1 min-h-0 bg-white flex flex-col overflow-hidden">
           {hasConversations ? (
             <ConversationList
               conversations={memberConversations}

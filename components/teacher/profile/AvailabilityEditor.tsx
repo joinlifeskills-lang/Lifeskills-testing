@@ -1,12 +1,49 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, X, CalendarOff, Check } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, X, CalendarOff, Globe } from "lucide-react";
 import { weeklySchedule, blockedDates as initialBlocked, teacherProfile } from "@/lib/teacher/data";
 import type { TimeSlot, BlockedDate } from "@/lib/teacher/types";
 
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const DAY_ABBR = ["M", "T", "W", "T", "F", "S", "S"];
+
+const TIMEZONES = [
+  { value: "Pacific/Honolulu", label: "Hawaii (HST)" },
+  { value: "America/Anchorage", label: "Alaska (AKST)" },
+  { value: "America/Los_Angeles", label: "Pacific Time (PT)" },
+  { value: "America/Denver", label: "Mountain Time (MT)" },
+  { value: "America/Chicago", label: "Central Time (CT)" },
+  { value: "America/New_York", label: "Eastern Time (ET)" },
+  { value: "America/Halifax", label: "Atlantic Time (AT)" },
+  { value: "America/Sao_Paulo", label: "Brasilia (BRT)" },
+  { value: "America/Argentina/Buenos_Aires", label: "Argentina (ART)" },
+  { value: "Atlantic/Reykjavik", label: "Iceland (GMT)" },
+  { value: "Europe/London", label: "London (GMT/BST)" },
+  { value: "Europe/Paris", label: "Paris (CET)" },
+  { value: "Europe/Berlin", label: "Berlin (CET)" },
+  { value: "Europe/Madrid", label: "Madrid (CET)" },
+  { value: "Europe/Rome", label: "Rome (CET)" },
+  { value: "Europe/Athens", label: "Athens (EET)" },
+  { value: "Europe/Moscow", label: "Moscow (MSK)" },
+  { value: "Africa/Cairo", label: "Cairo (EET)" },
+  { value: "Africa/Johannesburg", label: "Johannesburg (SAST)" },
+  { value: "Africa/Lagos", label: "Lagos (WAT)" },
+  { value: "Asia/Dubai", label: "Dubai (GST)" },
+  { value: "Asia/Karachi", label: "Karachi (PKT)" },
+  { value: "Asia/Kolkata", label: "India (IST)" },
+  { value: "Asia/Dhaka", label: "Dhaka (BST)" },
+  { value: "Asia/Bangkok", label: "Bangkok (ICT)" },
+  { value: "Asia/Singapore", label: "Singapore (SGT)" },
+  { value: "Asia/Shanghai", label: "China (CST)" },
+  { value: "Asia/Hong_Kong", label: "Hong Kong (HKT)" },
+  { value: "Asia/Seoul", label: "Seoul (KST)" },
+  { value: "Asia/Tokyo", label: "Tokyo (JST)" },
+  { value: "Australia/Perth", label: "Perth (AWST)" },
+  { value: "Australia/Adelaide", label: "Adelaide (ACST)" },
+  { value: "Australia/Sydney", label: "Sydney (AEST)" },
+  { value: "Pacific/Auckland", label: "Auckland (NZST)" },
+];
 
 /** Half-hour increments from 5:00 AM to 11:30 PM */
 function buildTimeOptions(): string[] {
@@ -22,6 +59,30 @@ function buildTimeOptions(): string[] {
 }
 const TIME_OPTIONS = buildTimeOptions();
 
+function getCurrentTimeInTz(tz: string): string {
+  try {
+    return new Date().toLocaleTimeString("en-US", {
+      timeZone: tz,
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  } catch {
+    return "";
+  }
+}
+
+function getTzAbbr(tz: string): string {
+  try {
+    return new Date().toLocaleTimeString("en-US", {
+      timeZone: tz,
+      timeZoneName: "short",
+    }).split(" ").pop() ?? "";
+  } catch {
+    return "";
+  }
+}
+
 export default function AvailabilityEditor() {
   const [schedule, setSchedule] = useState<Record<string, TimeSlot[]>>({ ...weeklySchedule });
   const [blocked, setBlocked] = useState<BlockedDate[]>([...initialBlocked]);
@@ -30,24 +91,15 @@ export default function AvailabilityEditor() {
   const [addingBlocked, setAddingBlocked] = useState(false);
   const [newBlockedDate, setNewBlockedDate] = useState("");
   const [newBlockedReason, setNewBlockedReason] = useState("");
+  const [currentTime, setCurrentTime] = useState(getCurrentTimeInTz(teacherProfile.timezone));
 
-  // Desktop inline editing
-  const [editingSlot, setEditingSlot] = useState<{ day: string; idx: number } | null>(null);
-  const [editStart, setEditStart] = useState("");
-  const [editEnd, setEditEnd] = useState("");
-
-  function openEdit(day: string, idx: number, slot: TimeSlot) {
-    setEditingSlot({ day, idx });
-    setEditStart(slot.start);
-    setEditEnd(slot.end);
-  }
-
-  function saveEdit() {
-    if (!editingSlot) return;
-    updateSlot(editingSlot.day, editingSlot.idx, "start", editStart);
-    updateSlot(editingSlot.day, editingSlot.idx, "end", editEnd);
-    setEditingSlot(null);
-  }
+  useEffect(() => {
+    setCurrentTime(getCurrentTimeInTz(timezone));
+    const interval = setInterval(() => {
+      setCurrentTime(getCurrentTimeInTz(timezone));
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [timezone]);
 
   function addSlot(day: string) {
     setSchedule((prev) => ({
@@ -57,7 +109,6 @@ export default function AvailabilityEditor() {
   }
 
   function removeSlot(day: string, idx: number) {
-    if (editingSlot?.day === day && editingSlot?.idx === idx) setEditingSlot(null);
     setSchedule((prev) => ({
       ...prev,
       [day]: prev[day].filter((_, i) => i !== idx),
@@ -90,171 +141,102 @@ export default function AvailabilityEditor() {
     <div className="space-y-6">
       {/* ── Timezone ── */}
       <div className="rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
-        <label className="mb-1.5 block text-sm font-medium text-neutral-700">Timezone</label>
+        <label className="mb-1 block text-sm font-medium text-neutral-700">Your Timezone</label>
+        <p className="mb-3 text-xs text-neutral-400">
+          All availability times are shown in your timezone. Clients will see them converted to their local time automatically.
+        </p>
         <select
-          className={inputClass + " w-full max-w-xs"}
+          className={inputClass + " w-full max-w-sm"}
           value={timezone}
           onChange={(e) => setTimezone(e.target.value)}
         >
-          <option value="America/Los_Angeles">Pacific Time (PT)</option>
-          <option value="America/Denver">Mountain Time (MT)</option>
-          <option value="America/Chicago">Central Time (CT)</option>
-          <option value="America/New_York">Eastern Time (ET)</option>
-          <option value="Europe/London">GMT / London</option>
-          <option value="Europe/Berlin">CET / Berlin</option>
-          <option value="Asia/Tokyo">JST / Tokyo</option>
+          {TIMEZONES.map(({ value, label }) => (
+            <option key={value} value={value}>{label}</option>
+          ))}
         </select>
+        <div className="mt-3 flex items-center gap-2 rounded-lg bg-electric-teal/5 px-4 py-2.5">
+          <Globe size={15} className="shrink-0 text-electric-teal" />
+          <span className="text-sm text-neutral-700">
+            Your current time: <span className="font-semibold">{currentTime}</span>{" "}
+            <span className="text-neutral-400">({getTzAbbr(timezone)})</span>
+          </span>
+        </div>
       </div>
 
       {/* ── Weekly Schedule ── */}
       <div className="rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
         <h3 className="mb-1 font-display text-lg text-neutral-900">Weekly Availability</h3>
-        <p className="mb-5 text-xs text-neutral-400">Click any time slot to edit its hours.</p>
+        <p className="mb-5 text-xs text-neutral-400">Set your available hours for each day of the week.</p>
 
-        {/* Desktop grid */}
-        <div className="hidden gap-2 md:grid md:grid-cols-7">
-          {DAYS.map((day) => (
-            <div key={day} className="space-y-2">
-              <p className="text-center text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                {day.slice(0, 3)}
-              </p>
-
-              {(schedule[day] || []).map((slot, i) => {
-                const isEditing =
-                  editingSlot?.day === day && editingSlot?.idx === i;
-
-                if (isEditing) {
-                  return (
-                    <div
-                      key={i}
-                      className="rounded-lg border border-electric-teal bg-white p-2 shadow-sm space-y-1.5"
-                    >
-                      <div>
-                        <p className="mb-0.5 text-[10px] font-medium text-neutral-400">Start</p>
-                        <select
-                          value={editStart}
-                          onChange={(e) => setEditStart(e.target.value)}
-                          className="w-full rounded-md border border-neutral-200 px-1.5 py-1 text-[11px] text-neutral-900 outline-none focus:border-electric-teal"
-                        >
-                          {TIME_OPTIONS.map((t) => (
-                            <option key={t} value={t}>{t}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <p className="mb-0.5 text-[10px] font-medium text-neutral-400">End</p>
-                        <select
-                          value={editEnd}
-                          onChange={(e) => setEditEnd(e.target.value)}
-                          className="w-full rounded-md border border-neutral-200 px-1.5 py-1 text-[11px] text-neutral-900 outline-none focus:border-electric-teal"
-                        >
-                          {TIME_OPTIONS.map((t) => (
-                            <option key={t} value={t}>{t}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="flex gap-1 pt-0.5">
-                        <button
-                          onClick={saveEdit}
-                          className="flex flex-1 items-center justify-center rounded-md bg-electric-teal py-1.5 text-[10px] font-semibold text-white"
-                        >
-                          <Check size={11} strokeWidth={3} />
-                        </button>
-                        <button
-                          onClick={() => { removeSlot(day, i); }}
-                          className="flex flex-1 items-center justify-center rounded-md border border-neutral-200 py-1.5 text-[10px] font-semibold text-neutral-400 hover:border-vivid-coral hover:text-vivid-coral transition-colors"
-                        >
-                          <X size={11} />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div
-                    key={i}
-                    onClick={() => openEdit(day, i, slot)}
-                    className="group relative cursor-pointer rounded-lg border border-electric-teal bg-electric-teal/10 px-2 py-2 text-xs text-neutral-700 transition-colors hover:bg-electric-teal/20"
-                  >
-                    <p className="font-semibold text-neutral-800">{slot.start}</p>
-                    <p className="text-neutral-500">{slot.end}</p>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); removeSlot(day, i); }}
-                      className="absolute -right-1.5 -top-1.5 hidden h-5 w-5 items-center justify-center rounded-full bg-white text-neutral-400 shadow hover:text-vivid-coral group-hover:flex"
-                    >
-                      <X size={12} />
-                    </button>
-                  </div>
-                );
-              })}
-
-              <button
-                onClick={() => addSlot(day)}
-                className="flex w-full items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 py-2 text-xs text-neutral-500 transition-colors hover:border-electric-teal hover:text-electric-teal"
-              >
-                <Plus size={12} /> Add
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile day tabs */}
-        <div className="md:hidden">
-          <div className="mb-4 flex gap-1 rounded-xl bg-neutral-100 p-1">
-            {DAYS.map((day, i) => (
+        {/* Day tabs */}
+        <div className="mb-4 flex gap-1 rounded-xl bg-neutral-100 p-1">
+          {DAYS.map((day, i) => {
+            const slotCount = (schedule[day] || []).length;
+            return (
               <button
                 key={day}
                 onClick={() => setSelectedDay(i)}
-                className={`flex-1 rounded-lg py-2 text-xs font-semibold transition-colors ${
+                className={`relative flex-1 rounded-lg py-2 text-xs font-semibold transition-colors ${
                   selectedDay === i
                     ? "bg-white text-neutral-900 shadow-sm"
                     : "text-neutral-500"
                 }`}
               >
-                {DAY_ABBR[i]}
+                <span className="hidden sm:inline">{day.slice(0, 3)}</span>
+                <span className="sm:hidden">{DAY_ABBR[i]}</span>
+                {slotCount > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-electric-teal text-[9px] font-bold text-white">
+                    {slotCount}
+                  </span>
+                )}
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          <div className="space-y-2">
-            <p className="text-sm font-semibold text-neutral-700">{DAYS[selectedDay]}</p>
-            {(schedule[DAYS[selectedDay]] || []).map((slot, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <select
-                  value={slot.start}
-                  onChange={(e) => updateSlot(DAYS[selectedDay], i, "start", e.target.value)}
-                  className={inputClass + " flex-1"}
-                >
-                  {TIME_OPTIONS.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </select>
-                <span className="text-xs text-neutral-400">–</span>
-                <select
-                  value={slot.end}
-                  onChange={(e) => updateSlot(DAYS[selectedDay], i, "end", e.target.value)}
-                  className={inputClass + " flex-1"}
-                >
-                  {TIME_OPTIONS.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </select>
-                <button
-                  onClick={() => removeSlot(DAYS[selectedDay], i)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-vivid-coral/10 hover:text-vivid-coral"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
-            <button
-              onClick={() => addSlot(DAYS[selectedDay])}
-              className="flex items-center gap-1.5 text-sm font-semibold text-electric-teal"
-            >
-              <Plus size={15} /> Add Time Slot
-            </button>
-          </div>
+        {/* Selected day slots */}
+        <div className="space-y-2">
+          <p className="text-sm font-semibold text-neutral-700">{DAYS[selectedDay]}</p>
+          {(schedule[DAYS[selectedDay]] || []).map((slot, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <select
+                value={slot.start}
+                onChange={(e) => updateSlot(DAYS[selectedDay], i, "start", e.target.value)}
+                className={inputClass + " flex-1"}
+              >
+                {TIME_OPTIONS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+              <span className="text-xs text-neutral-400">–</span>
+              <select
+                value={slot.end}
+                onChange={(e) => updateSlot(DAYS[selectedDay], i, "end", e.target.value)}
+                className={inputClass + " flex-1"}
+              >
+                {TIME_OPTIONS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => removeSlot(DAYS[selectedDay], i)}
+                className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-vivid-coral/10 hover:text-vivid-coral"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          ))}
+
+          {(schedule[DAYS[selectedDay]] || []).length === 0 && (
+            <p className="py-3 text-center text-sm text-neutral-400">No availability set for {DAYS[selectedDay]}</p>
+          )}
+
+          <button
+            onClick={() => addSlot(DAYS[selectedDay])}
+            className="flex items-center gap-1.5 text-sm font-semibold text-electric-teal"
+          >
+            <Plus size={15} /> Add Time Slot
+          </button>
         </div>
       </div>
 

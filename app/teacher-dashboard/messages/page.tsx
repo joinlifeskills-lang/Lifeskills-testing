@@ -29,24 +29,23 @@ export default function MessagesPage() {
   }
 
   function handleSend(text: string) {
-    // In a real app this would send via API
     console.log("Send message:", text);
   }
 
   return (
-    <>
+    <div className="-mb-20 lg:-mb-0 flex flex-col h-[calc(100dvh-58px)] lg:h-screen">
       <TeacherTopBar />
 
       {/* Desktop layout */}
-      <div className="hidden lg:flex h-[calc(100vh-65px)]">
-        <div className="w-80 shrink-0 border-r border-neutral-100 bg-white">
+      <div className="hidden lg:flex flex-1 min-h-0">
+        <div className="w-80 shrink-0 border-r border-neutral-100 bg-white overflow-hidden">
           <TeacherConversationList
             conversations={teacherConversations}
             activeId={activeId}
             onSelect={handleSelect}
           />
         </div>
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col bg-white min-h-0">
           <div className="flex-1 overflow-hidden">
             <TeacherChatThread
               conversation={activeConversation}
@@ -61,9 +60,9 @@ export default function MessagesPage() {
       </div>
 
       {/* Mobile layout */}
-      <div className="lg:hidden h-[calc(100vh-57px)]">
+      <div className="lg:hidden flex-1 min-h-0">
         {mobileView === "list" ? (
-          <div className="h-full bg-white">
+          <div className="h-full bg-white overflow-hidden">
             <TeacherConversationList
               conversations={teacherConversations}
               activeId={activeId}
@@ -89,7 +88,7 @@ export default function MessagesPage() {
                 </span>
               )}
             </div>
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-hidden min-h-0">
               <TeacherChatThread
                 conversation={activeConversation}
                 messages={activeMessages}
@@ -102,6 +101,6 @@ export default function MessagesPage() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

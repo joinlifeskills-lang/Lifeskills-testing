@@ -82,10 +82,6 @@ export default async function CheckoutPage({
                   </div>
                 </div>
 
-                {/* Rating + bio */}
-                <div className="font-sans text-[0.82rem] text-neutral-500 mb-3">
-                  <span className="text-amber-500">★</span> {teacher.rating} · {teacher.sessions} sessions
-                </div>
                 <p className="font-sans text-[0.88rem] text-neutral-600 leading-[1.6] line-clamp-2 mb-5">
                   {teacher.tagline}
                 </p>

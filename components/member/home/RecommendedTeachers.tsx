@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Star } from "lucide-react";
 import { teachers, disciplineTagColors } from "@/lib/teachers";
 
 // Teachers the member hasn't worked with
@@ -62,12 +61,6 @@ export default function RecommendedTeachers() {
                 </span>
               );
             })}
-          </div>
-
-          {/* Rating */}
-          <div className="flex items-center gap-1 mt-2 text-sm text-neutral-700">
-            <Star size={14} className="text-bright-amber fill-bright-amber" />
-            <span>{teacher.rating}</span>
           </div>
 
           {/* Price */}
