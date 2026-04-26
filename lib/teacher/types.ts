@@ -67,6 +67,7 @@ export interface ClientNote {
 // ── Earnings ──
 export type EarningStatus = "paid" | "pending" | "processing";
 export type PayoutStatus = "completed" | "processing" | "approved" | "denied";
+export type PayoutMethodType = "stripe" | "paypal" | "bank";
 
 export interface SessionEarning {
   id: string;
@@ -78,11 +79,37 @@ export interface SessionEarning {
   status: EarningStatus;
 }
 
+export interface StripePayoutMethod {
+  type: "stripe";
+  accountId: string;
+  last4: string;
+  connected: boolean;
+}
+
+export interface PayPalPayoutMethod {
+  type: "paypal";
+  email: string;
+}
+
+export interface BankPayoutMethod {
+  type: "bank";
+  accountHolder: string;
+  routingNumber: string;
+  accountLast4: string;
+}
+
+export type PayoutMethod = StripePayoutMethod | PayPalPayoutMethod | BankPayoutMethod;
+
+export interface TeacherPayoutSettings {
+  methods: PayoutMethod[];
+  defaultMethod: PayoutMethodType;
+}
+
 export interface Payout {
   id: string;
   date: string;
   amount: number;
-  method: "bank" | "stripe";
+  method: PayoutMethodType;
   status: PayoutStatus;
   type: "automatic" | "early";
 }

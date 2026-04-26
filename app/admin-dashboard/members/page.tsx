@@ -53,7 +53,7 @@ export default function MembersPage() {
   const activeFilterCount = statusFilter !== "all" ? 1 : 0;
 
   const handleRowClick = (member: Member) => {
-    router.push(`/admin/members/${member.id}`);
+    router.push(`/admin-dashboard/members/${member.id}`);
   };
 
   return (

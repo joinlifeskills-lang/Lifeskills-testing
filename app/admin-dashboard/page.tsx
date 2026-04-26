@@ -35,20 +35,14 @@ export default function AdminDashboard() {
 
         {/* Main grid */}
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+          {/* Left column: chart + activity */}
+          <div className="flex min-w-0 flex-col gap-6 lg:col-span-2">
             <RevenueChart />
-          </div>
-          <div>
-            <PendingActions />
-          </div>
-        </div>
-
-        {/* Bottom grid */}
-        <div className="mt-6 grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
             <ActivityFeed />
           </div>
-          <div>
+          {/* Right column: pending actions + quick stats */}
+          <div className="flex min-w-0 flex-col gap-6">
+            <PendingActions />
             <QuickStats />
           </div>
         </div>

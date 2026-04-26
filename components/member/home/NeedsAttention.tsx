@@ -39,10 +39,27 @@ export default function NeedsAttention() {
     !hasReflectionToday ||
     recentTeacherComments.length > 0;
 
-  if (!hasItems) return null;
+  if (!hasItems) {
+    return (
+      <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] p-5 md:p-6 h-full flex flex-col">
+        <h3 className="font-display text-lg text-neutral-900 mb-4">
+          Needs Attention
+        </h3>
+        <div className="flex-1 flex flex-col items-center justify-center text-center py-4">
+          <span className="text-3xl mb-3">🎉✨🙌</span>
+          <p className="font-display text-base text-deep-sage">
+            You&apos;re all caught up!
+          </p>
+          <p className="font-sans text-xs text-neutral-500 mt-1">
+            Nothing needs your attention today. Enjoy the calm 🌿
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] p-5 md:p-6">
+    <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] p-5 md:p-6 h-full">
       <h3 className="font-display text-lg text-neutral-900 mb-4">
         Needs Attention
       </h3>

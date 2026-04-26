@@ -39,6 +39,8 @@ export interface JourneyJournalEntry {
   createdAt: string;
   teacherComment?: string;
   teacherCommentAt?: string;
+  adminComment?: string;
+  adminCommentAt?: string;
 }
 
 export type JourneyMilestoneType =

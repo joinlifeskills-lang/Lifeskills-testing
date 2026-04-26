@@ -14,6 +14,7 @@ import {
   WeeklySchedule,
   BlockedDate,
   TeacherNotificationPrefs,
+  TeacherPayoutSettings,
 } from "./types";
 
 // ── Profile ──
@@ -262,6 +263,15 @@ export const blockedDates: BlockedDate[] = [
   { date: "2026-05-01", reason: "Holiday" },
   { date: "2026-05-02", reason: "Holiday" },
 ];
+
+// ── Payout Settings ──
+export const teacherPayoutSettings: TeacherPayoutSettings = {
+  methods: [
+    { type: "stripe", accountId: "acct_1Nv0FGQ", last4: "6789", connected: true },
+    { type: "paypal", email: "maya.reyes@gmail.com" },
+  ],
+  defaultMethod: "stripe",
+};
 
 // ── Notification Prefs ──
 export const teacherNotificationPrefs: TeacherNotificationPrefs = {

@@ -223,3 +223,18 @@ export function addJournalComment(entryId: string, comment: string) {
     ),
   });
 }
+
+export function addAdminComment(entryId: string, comment: string) {
+  set({
+    ...state,
+    entries: state.entries.map((e) =>
+      e.id !== entryId
+        ? e
+        : {
+            ...e,
+            adminComment: comment,
+            adminCommentAt: new Date().toISOString().slice(0, 10),
+          }
+    ),
+  });
+}

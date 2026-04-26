@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <AdminSidebar />
       <AdminMobileSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
 
-      <main className="pb-20 lg:ml-[260px] lg:pb-0">
+      <main className="overflow-x-hidden pb-20 lg:ml-[260px] lg:pb-0">
         {children}
       </main>
 

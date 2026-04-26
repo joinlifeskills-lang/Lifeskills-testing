@@ -6,8 +6,6 @@ import AdminButton from "@/components/admin/ui/AdminButton";
 import { defaultSettings } from "@/lib/admin/settings";
 import { PlatformSettings } from "@/lib/admin/types";
 
-const DURATION_OPTIONS = [30, 45, 60, 90];
-
 export default function PlatformConfig() {
   const [settings, setSettings] = useState<PlatformSettings>({ ...defaultSettings });
 
@@ -16,15 +14,6 @@ export default function PlatformConfig() {
     value: PlatformSettings[K]
   ) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const toggleDuration = (duration: number) => {
-    setSettings((prev) => ({
-      ...prev,
-      sessionDurations: prev.sessionDurations.includes(duration)
-        ? prev.sessionDurations.filter((d) => d !== duration)
-        : [...prev.sessionDurations, duration].sort((a, b) => a - b),
-    }));
   };
 
   const handleSave = () => {
@@ -102,32 +91,6 @@ export default function PlatformConfig() {
               min={0}
               className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm text-neutral-900 focus:border-deep-sage focus:outline-none focus:ring-1 focus:ring-deep-sage"
             />
-          </div>
-        </div>
-      </AdminCard>
-
-      {/* Sessions */}
-      <AdminCard className="p-6">
-        <h2 className="mb-4 text-lg font-semibold text-neutral-900">Sessions</h2>
-        <div>
-          <label className="mb-3 block text-sm font-medium text-neutral-700">
-            Session Durations
-          </label>
-          <div className="flex flex-wrap gap-3">
-            {DURATION_OPTIONS.map((duration) => (
-              <label
-                key={duration}
-                className="flex cursor-pointer items-center gap-2 rounded-xl border border-neutral-200 px-4 py-2.5 transition-colors hover:bg-neutral-50"
-              >
-                <input
-                  type="checkbox"
-                  checked={settings.sessionDurations.includes(duration)}
-                  onChange={() => toggleDuration(duration)}
-                  className="h-4 w-4 rounded border-neutral-300 text-deep-sage focus:ring-deep-sage"
-                />
-                <span className="text-sm text-neutral-700">{duration} min</span>
-              </label>
-            ))}
           </div>
         </div>
       </AdminCard>

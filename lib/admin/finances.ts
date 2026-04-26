@@ -1,4 +1,4 @@
-import type { Transaction, PayoutRequest, Refund } from "@/lib/admin/types";
+import type { Transaction, PayoutRequest, Refund, TeacherBalance } from "@/lib/admin/types";
 
 export const financialOverview = {
   totalRevenue: 311670,
@@ -28,16 +28,26 @@ export const transactions: Transaction[] = [
 ];
 
 export const payoutRequests: PayoutRequest[] = [
-  { id: "po-001", teacherName: "Anika Patel", teacherInitials: "AP", amount: 1840, requestDate: "2026-04-08", period: "Mar 31 - Apr 6", sessionsCount: 22, status: "pending" },
-  { id: "po-002", teacherName: "Marcus Chen", teacherInitials: "MC", amount: 1120, requestDate: "2026-04-08", period: "Mar 31 - Apr 6", sessionsCount: 16, status: "pending" },
-  { id: "po-003", teacherName: "Elena Rodriguez", teacherInitials: "ER", amount: 1240, requestDate: "2026-04-07", period: "Mar 31 - Apr 6", sessionsCount: 18, status: "completed" },
-  { id: "po-004", teacherName: "Nora Okafor", teacherInitials: "NO", amount: 960, requestDate: "2026-04-07", period: "Mar 31 - Apr 6", sessionsCount: 12, status: "pending" },
-  { id: "po-005", teacherName: "River Kai", teacherInitials: "RK", amount: 2150, requestDate: "2026-04-06", period: "Mar 31 - Apr 6", sessionsCount: 24, status: "processing" },
-  { id: "po-006", teacherName: "Maya Stevens", teacherInitials: "MS", amount: 780, requestDate: "2026-04-06", period: "Mar 31 - Apr 6", sessionsCount: 10, status: "pending" },
-  { id: "po-007", teacherName: "Tom Brennan", teacherInitials: "TB", amount: 1560, requestDate: "2026-04-05", period: "Mar 24 - Mar 30", sessionsCount: 20, status: "completed" },
-  { id: "po-008", teacherName: "Liam Nakamura", teacherInitials: "LN", amount: 640, requestDate: "2026-04-05", period: "Mar 31 - Apr 6", sessionsCount: 8, status: "pending" },
-  { id: "po-009", teacherName: "Sofia Andersson", teacherInitials: "SA", amount: 1380, requestDate: "2026-04-04", period: "Mar 24 - Mar 30", sessionsCount: 17, status: "completed" },
-  { id: "po-010", teacherName: "Anika Patel", teacherInitials: "AP", amount: 1560, requestDate: "2026-04-03", period: "Mar 24 - Mar 30", sessionsCount: 19, status: "completed" },
+  { id: "po-001", teacherName: "Anika Patel", teacherInitials: "AP", teacherId: "t-ap", amount: 1840, requestDate: "2026-04-08", period: "Mar 31 - Apr 6", sessionsCount: 22, status: "pending", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-002", teacherName: "Marcus Chen", teacherInitials: "MC", teacherId: "t-mc", amount: 1120, requestDate: "2026-04-08", period: "Mar 31 - Apr 6", sessionsCount: 16, status: "pending", type: "automatic", payoutMethod: "paypal" },
+  { id: "po-003", teacherName: "Elena Rodriguez", teacherInitials: "ER", teacherId: "t-er", amount: 1240, requestDate: "2026-04-07", period: "Mar 31 - Apr 6", sessionsCount: 18, status: "completed", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-004", teacherName: "Nora Okafor", teacherInitials: "NO", teacherId: "t-no", amount: 960, requestDate: "2026-04-07", period: "Mar 31 - Apr 6", sessionsCount: 12, status: "pending", type: "automatic", payoutMethod: "bank" },
+  { id: "po-005", teacherName: "River Kai", teacherInitials: "RK", teacherId: "t-rk", amount: 2150, requestDate: "2026-04-06", period: "Mar 31 - Apr 6", sessionsCount: 24, status: "processing", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-006", teacherName: "Maya Stevens", teacherInitials: "MS", teacherId: "t-ms", amount: 780, requestDate: "2026-04-06", period: "Mar 31 - Apr 6", sessionsCount: 10, status: "pending", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-007", teacherName: "Tom Brennan", teacherInitials: "TB", teacherId: "t-tb", amount: 1560, requestDate: "2026-04-05", period: "Mar 24 - Mar 30", sessionsCount: 20, status: "completed", type: "automatic", payoutMethod: "bank" },
+  { id: "po-008", teacherName: "Liam Nakamura", teacherInitials: "LN", teacherId: "t-ln", amount: 640, requestDate: "2026-04-05", period: "Mar 31 - Apr 6", sessionsCount: 8, status: "pending", type: "automatic", payoutMethod: "paypal" },
+  { id: "po-009", teacherName: "Sofia Andersson", teacherInitials: "SA", teacherId: "t-sa", amount: 1380, requestDate: "2026-04-04", period: "Mar 24 - Mar 30", sessionsCount: 17, status: "completed", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-010", teacherName: "Anika Patel", teacherInitials: "AP", teacherId: "t-ap", amount: 1560, requestDate: "2026-04-03", period: "Mar 24 - Mar 30", sessionsCount: 19, status: "completed", type: "automatic", payoutMethod: "stripe" },
+  { id: "po-011", teacherName: "Marcus Chen", teacherInitials: "MC", teacherId: "t-mc", amount: 450, requestDate: "2026-04-09", period: "Apr 7 - Apr 9", sessionsCount: 6, status: "pending", type: "early", payoutMethod: "paypal", reason: "Unexpected medical expense" },
+  { id: "po-012", teacherName: "Maya Stevens", teacherInitials: "MS", teacherId: "t-ms", amount: 320, requestDate: "2026-04-09", period: "Apr 7 - Apr 9", sessionsCount: 4, status: "pending", type: "early", payoutMethod: "stripe", reason: "Need funds for workshop materials" },
+];
+
+export const teacherBalances: TeacherBalance[] = [
+  { teacherId: "t-ap", teacherName: "Anika Patel", teacherInitials: "AP", completedSessions: 22, grossAmount: 2165, platformFee: 324.75, netAmount: 1840.25, period: "Mar 31 - Apr 6", payoutMethod: "Stripe ****4521" },
+  { teacherId: "t-mc", teacherName: "Marcus Chen", teacherInitials: "MC", completedSessions: 16, grossAmount: 1318, platformFee: 197.70, netAmount: 1120.30, period: "Mar 31 - Apr 6", payoutMethod: "PayPal m***@gmail.com" },
+  { teacherId: "t-no", teacherName: "Nora Okafor", teacherInitials: "NO", completedSessions: 12, grossAmount: 1129, platformFee: 169.35, netAmount: 959.65, period: "Mar 31 - Apr 6", payoutMethod: "Bank ****8832" },
+  { teacherId: "t-ms", teacherName: "Maya Stevens", teacherInitials: "MS", completedSessions: 10, grossAmount: 918, platformFee: 137.70, netAmount: 780.30, period: "Mar 31 - Apr 6", payoutMethod: "Stripe ****7744" },
+  { teacherId: "t-ln", teacherName: "Liam Nakamura", teacherInitials: "LN", completedSessions: 8, grossAmount: 753, platformFee: 112.95, netAmount: 640.05, period: "Mar 31 - Apr 6", payoutMethod: "PayPal l***@outlook.com" },
 ];
 
 export const refunds: Refund[] = [

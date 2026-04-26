@@ -7,6 +7,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[0], // Maya Reyes
     id: "t-1",
     email: "maya.reyes@email.com",
+    phone: "(512) 555-0147",
+    socials: { instagram: "@mayabreathes", website: "mayareyes.com" },
     status: "active",
     applicationDate: "2024-11-02",
     approvedDate: "2024-11-18",
@@ -24,6 +26,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[1], // James Okafor
     id: "t-2",
     email: "james.okafor@email.com",
+    phone: "(310) 555-0238",
+    socials: { instagram: "@jamesokafor.yoga", facebook: "jamesokafor" },
     status: "active",
     applicationDate: "2024-09-10",
     approvedDate: "2024-09-28",
@@ -40,6 +44,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[2], // Lena Park
     id: "t-3",
     email: "lena.park@email.com",
+    phone: "(415) 555-0392",
+    socials: { instagram: "@lenapark.mind", facebook: "lenapark-therapy", website: "lenaparkmindfulness.com" },
     status: "active",
     applicationDate: "2024-10-05",
     approvedDate: "2024-10-22",
@@ -57,6 +63,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[3], // David Cohen
     id: "t-4",
     email: "david.cohen@email.com",
+    phone: "(718) 555-0184",
+    socials: { instagram: "@davidcohen.breathe" },
     status: "active",
     applicationDate: "2025-06-12",
     approvedDate: "2025-06-30",
@@ -73,6 +81,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[4], // Anika Sharma
     id: "t-5",
     email: "anika.sharma@email.com",
+    phone: "(503) 555-0271",
+    socials: { instagram: "@anikasharma.somatic", facebook: "anikasharma", website: "anikasharma.co" },
     status: "active",
     applicationDate: "2024-08-20",
     approvedDate: "2024-09-05",
@@ -90,6 +100,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[5], // Carlos Vega
     id: "t-6",
     email: "carlos.vega@email.com",
+    phone: "(786) 555-0319",
+    socials: { instagram: "@carlosvega.spirit", website: "carlosvega.life" },
     status: "active",
     applicationDate: "2024-07-15",
     approvedDate: "2024-08-01",
@@ -106,6 +118,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[6], // Nora Eriksen
     id: "t-7",
     email: "nora.eriksen@email.com",
+    phone: "(206) 555-0455",
+    socials: { instagram: "@noraflow", facebook: "noraeriksen" },
     status: "active",
     applicationDate: "2025-08-01",
     approvedDate: "2025-08-18",
@@ -122,6 +136,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[7], // Kwame Mensah
     id: "t-8",
     email: "kwame.mensah@email.com",
+    phone: "(202) 555-0528",
+    socials: { instagram: "@kwame.stillness", website: "kwamemensah.org" },
     status: "active",
     applicationDate: "2024-10-28",
     approvedDate: "2024-11-12",
@@ -140,6 +156,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[8], // Sofia Tanaka
     id: "t-9",
     email: "sofia.tanaka@email.com",
+    phone: "(303) 555-0612",
+    socials: { instagram: "@sofiatanaka.breathe" },
     status: "suspended",
     applicationDate: "2024-09-18",
     approvedDate: "2024-10-04",
@@ -159,6 +177,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[9], // Eli Brandt
     id: "t-10",
     email: "eli.brandt@email.com",
+    phone: "(971) 555-0743",
+    socials: { instagram: "@elibrandt.yoga" },
     status: "rejected",
     applicationDate: "2025-12-10",
     rejectedDate: "2025-12-28",
@@ -178,6 +198,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[10], // Priya Nair
     id: "t-11",
     email: "priya.nair@email.com",
+    phone: "(408) 555-0856",
+    socials: { instagram: "@priyanair.somatic", facebook: "priyanair-wellness" },
     status: "pending",
     applicationDate: "2026-03-28",
     documents: [
@@ -192,6 +214,8 @@ export const adminTeachers: AdminTeacher[] = [
     ...teachers[11], // Marco Rossi
     id: "t-12",
     email: "marco.rossi@email.com",
+    phone: "(917) 555-0934",
+    socials: { instagram: "@marcorossi.yoga", website: "marcorossiyoga.com" },
     status: "pending",
     applicationDate: "2026-04-01",
     documents: [
@@ -208,6 +232,8 @@ export const adminTeachers: AdminTeacher[] = [
     initials: "AP",
     slug: "anya-petrova",
     email: "anya.petrova@email.com",
+    phone: "(646) 555-1027",
+    socials: { instagram: "@anyapetrova.zen", facebook: "anyapetrova" },
     tagline: "I help you find stillness and clarity through ancient meditation and breathwork practices.",
     disciplines: ["Meditation", "Breathwork"],
     bgColor: "bg-deep-sage",

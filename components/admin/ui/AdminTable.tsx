@@ -11,6 +11,7 @@ export interface Column<T = any> {
   render?: (item: T) => React.ReactNode;
   className?: string;
   hideOnMobile?: boolean;
+  showOnlyOnMobile?: boolean;
 }
 
 interface AdminTableProps {
@@ -20,6 +21,8 @@ interface AdminTableProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRowClick?: (item: any) => void;
   keyField: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mobileCardRender?: (item: any) => React.ReactNode;
 }
 
 export default function AdminTable({
@@ -27,6 +30,7 @@ export default function AdminTable({
   data,
   onRowClick,
   keyField,
+  mobileCardRender,
 }: AdminTableProps) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -60,7 +64,7 @@ export default function AdminTable({
         <table className="w-full">
           <thead>
             <tr className="border-b border-neutral-100">
-              {columns.map((col) => (
+              {columns.filter((c) => !c.showOnlyOnMobile).map((col) => (
                 <th
                   key={col.key}
                   className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-500 ${
@@ -87,7 +91,7 @@ export default function AdminTable({
                   onRowClick ? "cursor-pointer hover:bg-neutral-50" : ""
                 }`}
               >
-                {columns.map((col) => (
+                {columns.filter((c) => !c.showOnlyOnMobile).map((col) => (
                   <td key={col.key} className={`px-4 py-3.5 text-sm ${col.className || ""}`}>
                     {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
                   </td>
@@ -108,16 +112,20 @@ export default function AdminTable({
               onRowClick ? "cursor-pointer active:bg-neutral-50" : ""
             }`}
           >
-            {columns
-              .filter((c) => !c.hideOnMobile)
-              .map((col) => (
-                <div key={col.key} className="flex items-center justify-between py-1">
-                  <span className="text-xs font-medium text-neutral-500">{col.label}</span>
-                  <span className="text-sm text-neutral-900">
-                    {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
-                  </span>
-                </div>
-              ))}
+            {mobileCardRender
+              ? mobileCardRender(item)
+              : columns
+                  .filter((c) => !c.hideOnMobile)
+                  .map((col) => (
+                    <div key={col.key} className={`flex items-center justify-between py-1 ${col.showOnlyOnMobile ? "justify-end" : ""}`}>
+                      {col.label && !col.showOnlyOnMobile && (
+                        <span className="text-xs font-medium text-neutral-500">{col.label}</span>
+                      )}
+                      <span className="text-sm text-neutral-900">
+                        {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
+                      </span>
+                    </div>
+                  ))}
           </div>
         ))}
       </div>

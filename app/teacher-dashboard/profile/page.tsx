@@ -5,8 +5,9 @@ import TeacherTopBar from "@/components/teacher/layout/TeacherTopBar";
 import PublicProfile from "@/components/teacher/profile/PublicProfile";
 import AvailabilityEditor from "@/components/teacher/profile/AvailabilityEditor";
 import ReviewsDisplay from "@/components/teacher/profile/ReviewsDisplay";
+import TeacherCertifications from "@/components/teacher/profile/TeacherCertifications";
 
-const TABS = ["Public Profile", "Availability", "Reviews & Ratings"] as const;
+const TABS = ["Public Profile", "Certifications", "Availability", "Reviews & Ratings"] as const;
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>(TABS[0]);
@@ -36,6 +37,7 @@ export default function ProfilePage() {
 
         {/* Content */}
         {activeTab === "Public Profile" && <PublicProfile />}
+        {activeTab === "Certifications" && <TeacherCertifications />}
         {activeTab === "Availability" && <AvailabilityEditor />}
         {activeTab === "Reviews & Ratings" && <ReviewsDisplay />}
       </div>

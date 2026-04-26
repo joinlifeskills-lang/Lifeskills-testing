@@ -1,11 +1,23 @@
-import { Download } from "lucide-react";
-import type { Payout, PayoutStatus } from "@/lib/teacher/types";
+import { Download, CreditCard, Building2 } from "lucide-react";
+import type { Payout, PayoutStatus, PayoutMethodType } from "@/lib/teacher/types";
 
 const STATUS_STYLES: Record<PayoutStatus, string> = {
   completed: "bg-[#0BA89A]/10 text-[#0BA89A]",
   processing: "bg-[#F0A500]/10 text-[#F0A500]",
   approved: "bg-[#6BAA3E]/10 text-[#6BAA3E]",
   denied: "bg-[#E8603A]/10 text-[#E8603A]",
+};
+
+const METHOD_ICONS: Record<PayoutMethodType, React.ReactNode> = {
+  stripe: <CreditCard size={14} className="text-[#635BFF]" />,
+  paypal: <span className="text-[10px] font-bold text-[#003087]">P</span>,
+  bank: <Building2 size={14} className="text-neutral-500" />,
+};
+
+const METHOD_LABELS: Record<PayoutMethodType, string> = {
+  stripe: "Stripe",
+  paypal: "PayPal",
+  bank: "Bank",
 };
 
 function formatDate(iso: string) {
@@ -44,14 +56,20 @@ export default function PayoutHistory({ payouts }: { payouts: Payout[] }) {
               <p className="text-xs text-neutral-500">
                 {formatDate(p.date)}
               </p>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-neutral-500 capitalize">
-                  {p.method === "bank" ? "Bank" : "Stripe"}
+              <div className="flex items-center gap-1.5">
+                {METHOD_ICONS[p.method]}
+                <span className="text-xs text-neutral-500">
+                  {METHOD_LABELS[p.method]}
                 </span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
+              {p.type === "early" && (
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                  Early
+                </span>
+              )}
               <span
                 className={`rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${STATUS_STYLES[p.status]}`}
               >

@@ -18,7 +18,7 @@ import {
 const coreNavItems = [
   { label: "Home", href: "/customer-dashboard", icon: Home },
   { label: "Sessions", href: "/customer-dashboard/sessions", icon: Calendar },
-  { label: "Journey", href: "/customer-dashboard/journey", icon: TrendingUp },
+  { label: "My Journey", href: "/customer-dashboard/journey", icon: TrendingUp },
   { label: "Messages", href: "/customer-dashboard/messages", icon: MessageSquare },
 ];
 

@@ -8,9 +8,9 @@ export default function RevenueChart() {
   return (
     <AdminCard className="p-5">
       <h3 className="mb-4 text-sm font-semibold text-neutral-900">Revenue Trend</h3>
-      <div className="h-[260px]">
+      <div className="h-[200px] sm:h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={revenueChartData}>
+          <AreaChart data={revenueChartData} margin={{ right: 16 }}>
             <defs>
               <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#0BA89A" stopOpacity={0.2} />

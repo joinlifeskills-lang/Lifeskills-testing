@@ -27,5 +27,6 @@ export function useJourneyStore() {
     addSubGoal: actions.addSubGoal,
     deleteSubGoal: actions.deleteSubGoal,
     addJournalComment: actions.addJournalComment,
+    addAdminComment: actions.addAdminComment,
   };
 }

@@ -9,6 +9,8 @@ export interface AdminTeacher {
   initials: string;
   slug: string;
   email: string;
+  phone: string;
+  socials?: { instagram?: string; facebook?: string; website?: string };
   tagline: string;
   disciplines: Discipline[];
   bgColor: string;
@@ -127,15 +129,33 @@ export interface Transaction {
   status: PayoutStatus | RefundStatus;
 }
 
+export type PayoutMethodType = "stripe" | "paypal" | "bank";
+
 export interface PayoutRequest {
   id: string;
   teacherName: string;
   teacherInitials: string;
+  teacherId: string;
   amount: number;
   requestDate: string;
   period: string;
   sessionsCount: number;
   status: PayoutStatus;
+  type: "automatic" | "early";
+  payoutMethod: PayoutMethodType;
+  reason?: string;
+}
+
+export interface TeacherBalance {
+  teacherId: string;
+  teacherName: string;
+  teacherInitials: string;
+  completedSessions: number;
+  grossAmount: number;
+  platformFee: number;
+  netAmount: number;
+  period: string;
+  payoutMethod: string;
 }
 
 export interface Refund {

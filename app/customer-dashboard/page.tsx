@@ -17,7 +17,7 @@ export default function DashboardPage() {
         <WelcomeBanner />
 
         {/* Next Session + Needs Attention side by side on desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
           <div className="lg:col-span-7">
             <UpcomingSessionCard />
           </div>
